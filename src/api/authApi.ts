@@ -25,6 +25,16 @@ type LoginResponse = {
     data: LoginData;
 }
 
+// type RegisterData = {
+//     user:
+// }
+
+// type RegisterResponse = {
+//     statusCode: number;
+//     success: boolean;
+//     message: string;
+// }
+
 export const login = async (payload: LoginPayload) => {
     const response = await api.post<LoginResponse>(
         "/auth/login",
@@ -32,4 +42,13 @@ export const login = async (payload: LoginPayload) => {
     )
 
     return response.data;
+}
+
+export const register = async (payload: any) => {
+    const response = await api.post<any>(
+        "/auth/register",
+        payload
+    )
+
+    return response.data
 }
