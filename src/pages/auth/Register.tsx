@@ -3,6 +3,7 @@ import { Button } from "../../components/ui/btton"
 import { register } from "../../api/authApi"
 import { useState } from "react"
 import axios from "axios"
+import { Link } from "react-router"
 
 export const Register = () => {
     const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ export const Register = () => {
         }))
     }
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         try {
@@ -47,10 +48,10 @@ export const Register = () => {
     return (
         <div className="min-h-screen flex flex-col justify-center items-center">
             <form
-                onSubmit={handleLogin}
-                className="bg-white p-6 shadow-lg rounded-xl flex flex-col gap-4 w-[25rem] justify-center"
+                onSubmit={handleRegister}
+                className="bg-white p-6 shadow-lg rounded-xl flex flex-col gap-4 w-100 justify-center"
             >
-                <h1 className="text-[2.5rem] text-center">Login</h1>
+                <h1 className="text-[2.5rem] text-center">Register</h1>
 
                 <Input
                     label="Name"
@@ -93,6 +94,10 @@ export const Register = () => {
                     type="submit"
                     className="bg-roast text-cream rounded-lg p-1.5"
                 />
+
+                <p className="text-center text-sm">
+                    Already have an account? <Link to="/login" className="text-roast font-semibold">Login</Link>
+                </p>
             </form>
         </div>
     )

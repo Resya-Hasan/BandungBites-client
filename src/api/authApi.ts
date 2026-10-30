@@ -5,6 +5,12 @@ type LoginPayload = {
     password: string;
 }
 
+type RegisterPayload = {
+    name: string;
+    email: string;
+    password: string;
+}
+
 type User = {
     _id: string;
     name: string;
@@ -13,30 +19,26 @@ type User = {
     isActive: boolean;
 }
 
-type LoginData = {
+type AuthData = {
     user: User
     accessToken: string
 }
 
-type LoginResponse = {
+type AuthResponse = {
     statusCode: number;
     success: boolean;
     message: string;
-    data: LoginData;
+    data: AuthData;
 }
 
-// type RegisterData = {
-//     user:
-// }
-
-// type RegisterResponse = {
-//     statusCode: number;
-//     success: boolean;
-//     message: string;
-// }
+type LogoutResponse = {
+    statusCode: number;
+    success: boolean;
+    message: string;
+}
 
 export const login = async (payload: LoginPayload) => {
-    const response = await api.post<LoginResponse>(
+    const response = await api.post<AuthResponse>(
         "/auth/login",
         payload
     )
@@ -44,11 +46,23 @@ export const login = async (payload: LoginPayload) => {
     return response.data;
 }
 
-export const register = async (payload: any) => {
-    const response = await api.post<any>(
+export const register = async (payload: RegisterPayload) => {
+    const response = await api.post<AuthResponse>(
         "/auth/register",
         payload
     )
+
+    return response.data
+}
+
+export const refreshToken = async () => {
+    const response = await api.post<AuthResponse>("/auth/refresh")
+
+    return response.data
+}
+
+export const logout = async () => {
+    const response = await api.post<LogoutResponse>("/auth/logout")
 
     return response.data
 }
