@@ -37,6 +37,13 @@ type LogoutResponse = {
     message: string;
 }
 
+type GetMeResponse = {
+    statusCode: number;
+    success: boolean;
+    message: string;
+    data: User;
+}
+
 export const login = async (payload: LoginPayload) => {
     const response = await api.post<AuthResponse>(
         "/auth/login",
@@ -63,6 +70,12 @@ export const refreshToken = async () => {
 
 export const logout = async () => {
     const response = await api.post<LogoutResponse>("/auth/logout")
+
+    return response.data
+}
+
+export const getMe = async () => {
+    const response = await api.get<GetMeResponse>("/auth/me")
 
     return response.data
 }

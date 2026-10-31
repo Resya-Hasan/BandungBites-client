@@ -8,6 +8,8 @@ import type { AppDispatch, RootState } from './store/store'
 import { refreshSession } from './features/auth/authSlice'
 import { useEffect } from 'react';
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import PublicRoute from './components/auth/PublicRoute'
+import Profile from './pages/user/Profile'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,11 +28,14 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
+      <Route element={<PublicRoute />}>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/home" element={<Home />} />\
+        <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   )
