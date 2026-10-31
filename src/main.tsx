@@ -5,6 +5,9 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router'
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
+import {setAccessTokenGetter} from "./api/axiosInstance.ts";
+
+setAccessTokenGetter(() => store.getState().auth.accessToken);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
