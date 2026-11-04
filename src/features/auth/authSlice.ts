@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { refreshToken } from "../../api/authApi";
+import type { RootState } from "../../store/store"
 
 type User = {
     _id: string;
@@ -26,6 +27,13 @@ export const refreshSession = createAsyncThunk(
     async () => {
         const data = await refreshToken();
         return data;
+    },
+    {
+        condition: (_, { getState }) => {
+            const state = getState() as RootState;
+
+            return state.auth.status === "idle"
+        }
     }
 )
 
@@ -50,6 +58,9 @@ const authSlice = createSlice({
             state.accessToken = null;
             state.status = "unauthenticated";
         },
+        setAccessToken: (state, action: PayloadAction<string>) => {
+            state.accessToken = action.payload;
+        },
     },
 
     extraReducers: (builder) => {
@@ -72,5 +83,5 @@ const authSlice = createSlice({
     }
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setAccessToken } = authSlice.actions;
 export default authSlice.reducer;
