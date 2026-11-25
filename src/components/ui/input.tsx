@@ -7,7 +7,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 
 export const Input = ({ label, error, id, className = "", ...props }: InputProps) => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
             <label htmlFor={id}>{label}</label>
 
             <input
