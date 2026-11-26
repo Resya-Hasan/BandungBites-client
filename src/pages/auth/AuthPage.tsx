@@ -18,7 +18,7 @@ export const AuthPage = () => {
 
                 {/* Image panel: geser ke kanan saat register */}
                 <div
-                    className={`absolute top-0 left-0 w-1/2 h-full z-10 transition-transform duration-700 ease-in-out
+                    className={`hidden sm:block absolute top-0 left-0 w-1/2 h-full z-10 transition-transform duration-700 ease-in-out
                     ${isRegister ? "translate-x-full" : "translate-x-0"}`}
                 >
                     <img src={LoginImage} alt="" className="w-full h-full object-cover scale-105" />
@@ -27,8 +27,8 @@ export const AuthPage = () => {
                 {/* Login form: awalnya di kanan, geser ke kiri + fade saat register */}
                 <div
                     inert={isRegister}
-                    className={`absolute top-0 left-1/2 w-1/2 h-full transition-all duration-700 ease-in-out
-                    ${isRegister ? "-translate-x-full opacity-0 pointer-events-none" : "translate-x-0 opacity-100"}`}
+                    className={`absolute top-0 left-0 w-full sm:left-1/2 sm:w-1/2 h-full transition-all duration-700 ease-in-out
+                    ${isRegister ? "opacity-0 pointer-events-none md:-translate-x-full" : "opacity-100"}`}
                 >
                     <LoginForm />
                 </div>
@@ -36,8 +36,8 @@ export const AuthPage = () => {
                 {/* Register form: awalnya di kiri, tapi digeser ke kanan & hidden saat login */}
                 <div
                     inert={!isRegister}
-                    className={`absolute top-0 left-0 w-1/2 h-full transition-all duration-700 ease-in-out
-                    ${isRegister ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
+                    className={`absolute top-0 left-0 w-full sm:w-1/2 h-full transition-all duration-700 ease-in-out
+                    ${isRegister ? "opacity-100" : "opacity-0 pointer-events-none md:translate-x-full"}`}
                 >
                     <RegisterForm />
                 </div>
