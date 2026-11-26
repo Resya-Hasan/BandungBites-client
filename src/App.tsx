@@ -1,7 +1,7 @@
 import './App.css'
 import { Route, Routes } from "react-router"
-import { Login } from './pages/auth/Login'
-import { Register } from './pages/auth/Register'
+import { Toaster } from 'react-hot-toast'
+import { AuthPage } from './pages/auth/AuthPage'
 import Home from './pages/user/Home'
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from './store/store'
@@ -10,10 +10,10 @@ import { useEffect } from 'react';
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import PublicRoute from './components/auth/PublicRoute'
 import Profile from './pages/user/Profile'
+import { toastOptions } from './utils/toastOptions'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-
   const status = useSelector((state: RootState) => state.auth.status)
 
   useEffect(() => {
@@ -22,22 +22,26 @@ function App() {
     }
   }, [dispatch, status])
 
-  if (status === "idle" || status === "loading") {
-    return <div>Loading...</div>
-  }
-
   return (
-    <Routes>
-      <Route element={<PublicRoute />}>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Route>
+    <>
+      <Toaster position="top-right" gutter={10} toastOptions={toastOptions} />
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-      </Route>
-    </Routes>
+      {status === "idle" || status === "loading" ? (
+        <div>Loading...</div>
+      ) : (
+        <Routes>
+          <Route element={<PublicRoute />}>
+            <Route path="/register" element={<AuthPage />} />
+            <Route path="/login" element={<AuthPage />} />
+          </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      )}
+    </>
   )
 }
 
