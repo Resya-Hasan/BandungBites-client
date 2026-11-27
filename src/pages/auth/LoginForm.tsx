@@ -42,6 +42,8 @@ export const LoginForm = () => {
                 accessToken: result.data.accessToken
             }))
 
+            console.log(result.data)
+
             setFormData({
                 email: "",
                 password: ""
@@ -49,7 +51,7 @@ export const LoginForm = () => {
 
             toast.success(result.message);
 
-            navigate("/home")
+            navigate("/")
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 const response = err.response?.data;

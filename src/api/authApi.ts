@@ -16,6 +16,9 @@ type User = {
     name: string;
     email: string;
     role: string;
+    avatar: string;
+    createdAt: string;
+    updatedAt: string;
     isActive: boolean;
 }
 

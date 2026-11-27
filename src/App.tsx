@@ -11,6 +11,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import PublicRoute from './components/auth/PublicRoute'
 import Profile from './pages/user/Profile'
 import { toastOptions } from './utils/toastOptions'
+import MainLayout from './layouts/MainLayout'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,13 +31,16 @@ function App() {
         <div>Loading...</div>
       ) : (
         <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+
           <Route element={<PublicRoute />}>
             <Route path="/register" element={<AuthPage />} />
             <Route path="/login" element={<AuthPage />} />
           </Route>
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
