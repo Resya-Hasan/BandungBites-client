@@ -8,7 +8,7 @@ const PublicRoute = () => {
     )
 
     if (accessToken) {
-        return <Navigate to="/home" replace />
+        return <Navigate to="/" replace />
     }
     
     return <Outlet />

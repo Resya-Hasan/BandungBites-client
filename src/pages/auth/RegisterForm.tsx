@@ -52,7 +52,7 @@ export const RegisterForm = () => {
             }))
 
             toast.success(result.message);
-            navigate("/home");
+            navigate("/");
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 const response = err.response?.data;
