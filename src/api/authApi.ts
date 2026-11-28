@@ -1,4 +1,4 @@
-import api from "./axiosInstance";
+import api, { requestRefreshToken } from "./axiosInstance";
 
 type LoginPayload = {
     email: string;
@@ -66,9 +66,7 @@ export const register = async (payload: RegisterPayload) => {
 }
 
 export const refreshToken = async () => {
-    const response = await api.post<AuthResponse>("/auth/refresh")
-
-    return response.data
+    return await requestRefreshToken();
 }
 
 export const logout = async () => {
@@ -77,8 +75,12 @@ export const logout = async () => {
     return response.data
 }
 
-export const getMe = async () => {
-    const response = await api.get<GetMeResponse>("/auth/me")
+export const getMe = async (accessToken: string) => {
+    const response = await api.get<GetMeResponse>("/auth/me", {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
 
     return response.data
 }

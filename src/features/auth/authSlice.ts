@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { refreshToken } from "../../api/authApi";
-import type { RootState } from "../../store/store"
+import { refreshToken, getMe } from "../../api/authApi";
+// import type { RootState } from "../../store/store"
 
 type User = {
     _id: string;
@@ -27,18 +27,24 @@ const initialState: AuthState = {
 
 export const refreshSession = createAsyncThunk(
     "auth/refreshSession",
-    async () => {
-        const data = await refreshToken();
-        return data;
-    },
-    {
-        condition: (_, { getState }) => {
-            const state = getState() as RootState;
+    async (_, thunkAPI) => {
+        try {
+            const tokenResponse = await refreshToken();
 
-            return state.auth.status === "idle"
+            const accessToken = tokenResponse.data.accessToken;
+
+            const userResponse = await getMe(accessToken);
+
+            return {
+                accessToken,
+                user: userResponse.data
+            };
+
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
         }
     }
-)
+);
 
 const authSlice = createSlice({
     name: "auth", // <---  The name of the slice
@@ -73,8 +79,8 @@ const authSlice = createSlice({
             })
 
             .addCase(refreshSession.fulfilled, (state, action) => {
-                state.user = action.payload.data.user;
-                state.accessToken = action.payload.data.accessToken;
+                state.accessToken = action.payload.accessToken;
+                state.user = action.payload.user;
                 state.status = "authenticated";
             })
 
