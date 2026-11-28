@@ -1,10 +1,10 @@
-// import { Button } from "../../components/ui/btton"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../../store/store"
 import { logout } from "../../features/auth/authSlice"
 import { useNavigate, Link } from "react-router"
 import { logout as logoutApi } from "../../api/authApi"
 import UserDropdown from "./userDropdown"
+import { SearchBar } from "./searchBar"
 
 export const Navbar = () => {
     const navigate = useNavigate()
@@ -37,6 +37,7 @@ export const Navbar = () => {
                 <h1 className="font-serif text-2xl font-bold text-espresso">Bandung Bites</h1>
             </div>
             <div className="nav-links flex space-x-4">
+                <SearchBar />
                 {isAuthenticated ? (
                     <div className="flex items-center space-x-4">
                         <Link to="/cart" className="text-espresso hover:text-amber">Cart</Link>

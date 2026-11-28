@@ -25,7 +25,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const token = getAccessToken();
 
-    if (token) {
+    if (token && !config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -37,6 +37,12 @@ const refreshClient = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
 });
+
+export const requestRefreshToken = async () => {
+    const response = await refreshClient.post("/auth/refresh");
+
+    return response.data;
+};
 
 type RetryConfig = InternalAxiosRequestConfig & {
     _retry?: boolean;
